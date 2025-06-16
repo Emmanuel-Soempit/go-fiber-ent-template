@@ -1,0 +1,38 @@
+.env
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+
+# Output of go build
+/build/
+bin/
+dist/
+
+# Dependency directories (if you use vendoring)
+vendor/
+
+# IDE/editor files
+.vscode/
+.idea/
+*.swp
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Environment/config files
+.env
+.env.*
+
+# Logs
+*.log
+
+# Coverage files
+coverage.out
+
+# Fiber session files (if you use file storage for sessions)
+sessions/
