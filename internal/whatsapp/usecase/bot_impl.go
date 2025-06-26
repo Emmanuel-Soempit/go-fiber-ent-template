@@ -5,6 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 	"slices"
 	"strings"
 	"xaia-backend/internal/api/product/usecase"
@@ -22,7 +23,11 @@ type botUsecase struct {
 }
 
 func NewBotUsecase(customerRepo repository.CustomerRepo, productUsecase usecase.ProductUsecase) BotUsecase {
-	prompts, err := util.LoadPrompts("data/prompts.json")
+	promptsPath := os.Getenv("PROMPTS_PATH")
+	if promptsPath == "" {
+		promptsPath = "../data/prompts.json" // relative to /cmd
+	}
+	prompts, err := util.LoadPrompts(promptsPath)
 	if err != nil {
 		log.Printf("Error %s", err)
 		return nil
