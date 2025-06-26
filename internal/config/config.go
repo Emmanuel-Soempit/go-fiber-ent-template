@@ -16,6 +16,11 @@ import (
 )
 
 func InitializeConfigurations() {
+	if dir, err := os.Getwd(); err == nil {
+		log.Printf("Current working directory: %s", dir)
+	} else {
+		log.Printf("Could not get working directory: %v", err)
+	}
 	// Load app .env file
 	if err := godotenv.Load(); err != nil {
 		log.Println("No .env file found, falling back to OS env")
