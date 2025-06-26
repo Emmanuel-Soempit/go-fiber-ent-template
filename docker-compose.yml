@@ -1,17 +1,18 @@
 version: '3.8'
 
 services:
-  xaia_db:
-    image: mysql:8.0
+  db:
+    image: postgres:15
     container_name: xaia_db
+    restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: xaia
-    command: --bind-address=0.0.0.0
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_DB: xaia_db
     ports:
-      - "3306:3306"
+      - "5432:5432"
     volumes:
-      - xaia_db_data:/var/lib/mysql
+      - db_data:/var/lib/postgresql/data
 
 volumes:
-  xaia_db_data:
+  db_data:

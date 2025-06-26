@@ -8,11 +8,11 @@ import (
 	"xaia-backend/internal/api"
 	"xaia-backend/internal/whatsapp/delivery/http"
 
-	_ "github.com/go-sql-driver/mysql"
 	"github.com/gofiber/fiber/v2"
 	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/joho/godotenv"
+	_ "github.com/lib/pq"
 )
 
 func InitializeConfigurations() {
@@ -43,7 +43,7 @@ func InitializeConfigurations() {
 
 func databseConfigs() *ent.Client {
 	// Initialize database connection
-	client, err := ent.Open("mysql", os.Getenv("DATABASE_URL"))
+	client, err := ent.Open("postgres", os.Getenv("DATABASE_URL"))
 	if err != nil {
 		log.Fatalf("Failed opening connection to mysql: %v", err)
 	}
