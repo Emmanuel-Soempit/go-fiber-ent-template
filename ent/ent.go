@@ -8,6 +8,8 @@ import (
 	"fmt"
 	"reflect"
 	"sync"
+	"xaia-backend/ent/customer"
+	"xaia-backend/ent/product"
 	"xaia-backend/ent/user"
 
 	"entgo.io/ent"
@@ -73,7 +75,9 @@ var (
 func checkColumn(table, column string) error {
 	initCheck.Do(func() {
 		columnCheck = sql.NewColumnCheck(map[string]func(string) bool{
-			user.Table: user.ValidColumn,
+			customer.Table: customer.ValidColumn,
+			product.Table:  product.ValidColumn,
+			user.Table:     user.ValidColumn,
 		})
 	})
 	return columnCheck(table, column)

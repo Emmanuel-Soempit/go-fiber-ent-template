@@ -3,6 +3,9 @@
 package ent
 
 import (
+	"time"
+	"xaia-backend/ent/customer"
+	"xaia-backend/ent/product"
 	"xaia-backend/ent/schema"
 	"xaia-backend/ent/user"
 )
@@ -11,6 +14,67 @@ import (
 // (default values, validators, hooks and policies) and stitches it
 // to their package variables.
 func init() {
+	customerFields := schema.Customer{}.Fields()
+	_ = customerFields
+	// customerDescWhatsappID is the schema descriptor for whatsapp_id field.
+	customerDescWhatsappID := customerFields[0].Descriptor()
+	// customer.WhatsappIDValidator is a validator for the "whatsapp_id" field. It is called by the builders before save.
+	customer.WhatsappIDValidator = customerDescWhatsappID.Validators[0].(func(string) error)
+	// customerDescPhone is the schema descriptor for phone field.
+	customerDescPhone := customerFields[2].Descriptor()
+	// customer.PhoneValidator is a validator for the "phone" field. It is called by the builders before save.
+	customer.PhoneValidator = customerDescPhone.Validators[0].(func(string) error)
+	// customerDescCreatedAt is the schema descriptor for created_at field.
+	customerDescCreatedAt := customerFields[3].Descriptor()
+	// customer.DefaultCreatedAt holds the default value on creation for the created_at field.
+	customer.DefaultCreatedAt = customerDescCreatedAt.Default.(func() time.Time)
+	// customerDescUpdatedAt is the schema descriptor for updated_at field.
+	customerDescUpdatedAt := customerFields[4].Descriptor()
+	// customer.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	customer.DefaultUpdatedAt = customerDescUpdatedAt.Default.(func() time.Time)
+	// customer.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	customer.UpdateDefaultUpdatedAt = customerDescUpdatedAt.UpdateDefault.(func() time.Time)
+	productMixin := schema.Product{}.Mixin()
+	productMixinFields0 := productMixin[0].Fields()
+	_ = productMixinFields0
+	productFields := schema.Product{}.Fields()
+	_ = productFields
+	// productDescCreateTime is the schema descriptor for create_time field.
+	productDescCreateTime := productMixinFields0[0].Descriptor()
+	// product.DefaultCreateTime holds the default value on creation for the create_time field.
+	product.DefaultCreateTime = productDescCreateTime.Default.(func() time.Time)
+	// productDescUpdateTime is the schema descriptor for update_time field.
+	productDescUpdateTime := productMixinFields0[1].Descriptor()
+	// product.DefaultUpdateTime holds the default value on creation for the update_time field.
+	product.DefaultUpdateTime = productDescUpdateTime.Default.(func() time.Time)
+	// product.UpdateDefaultUpdateTime holds the default value on update for the update_time field.
+	product.UpdateDefaultUpdateTime = productDescUpdateTime.UpdateDefault.(func() time.Time)
+	// productDescName is the schema descriptor for name field.
+	productDescName := productFields[0].Descriptor()
+	// product.NameValidator is a validator for the "name" field. It is called by the builders before save.
+	product.NameValidator = productDescName.Validators[0].(func(string) error)
+	// productDescPrice is the schema descriptor for price field.
+	productDescPrice := productFields[2].Descriptor()
+	// product.PriceValidator is a validator for the "price" field. It is called by the builders before save.
+	product.PriceValidator = productDescPrice.Validators[0].(func(float64) error)
+	// productDescCategory is the schema descriptor for category field.
+	productDescCategory := productFields[4].Descriptor()
+	// product.CategoryValidator is a validator for the "category" field. It is called by the builders before save.
+	product.CategoryValidator = productDescCategory.Validators[0].(func(string) error)
+	// productDescDesign is the schema descriptor for design field.
+	productDescDesign := productFields[5].Descriptor()
+	// product.DesignValidator is a validator for the "design" field. It is called by the builders before save.
+	product.DesignValidator = productDescDesign.Validators[0].(func(string) error)
+	// productDescCreatedAt is the schema descriptor for created_at field.
+	productDescCreatedAt := productFields[6].Descriptor()
+	// product.DefaultCreatedAt holds the default value on creation for the created_at field.
+	product.DefaultCreatedAt = productDescCreatedAt.Default.(func() time.Time)
+	// productDescUpdatedAt is the schema descriptor for updated_at field.
+	productDescUpdatedAt := productFields[7].Descriptor()
+	// product.DefaultUpdatedAt holds the default value on creation for the updated_at field.
+	product.DefaultUpdatedAt = productDescUpdatedAt.Default.(func() time.Time)
+	// product.UpdateDefaultUpdatedAt holds the default value on update for the updated_at field.
+	product.UpdateDefaultUpdatedAt = productDescUpdatedAt.UpdateDefault.(func() time.Time)
 	userFields := schema.User{}.Fields()
 	_ = userFields
 	// userDescFirstname is the schema descriptor for firstname field.

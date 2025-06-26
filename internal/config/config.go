@@ -6,9 +6,11 @@ import (
 	"os"
 	"xaia-backend/ent"
 	"xaia-backend/internal/api"
+	"xaia-backend/internal/whatsapp/delivery/http"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"github.com/gofiber/fiber/v2/middleware/logger"
 	"github.com/joho/godotenv"
 )
@@ -24,10 +26,18 @@ func InitializeConfigurations() {
 	appConfigurations(app)
 
 	client := databseConfigs()
+	// util.ToggleConversationalAutomation(true)
+	// log.Println("Route /gd/webhookh pre registered")
+	// app.Post("/gd/webhookh", func(ctx *fiber.Ctx) error {
+	// 	log.Println("Whatsapp routes compil")
+	// 	return ctx.SendStatus(fiber.StatusUnauthorized)
+	// })
+	// log.Println("Route /gd/webhookh registered")
 
 	api.SetupRoutes(app, client)
+	http.RegisterWhatsappRoutes(app, client)
 
-	app.Listen(":3000")
+	app.Listen(":3333")
 
 }
 
@@ -50,6 +60,21 @@ func databseConfigs() *ent.Client {
 }
 
 func appConfigurations(app *fiber.App) {
-	// Initialize default config
+	// CORS should be first
+	app.Use(cors.New(cors.Config{
+		AllowOrigins:     "https://whatsapp-vendor-frontend.vercel.app",
+		AllowMethods:     "GET,POST,PUT,DELETE,OPTIONS",
+		AllowHeaders:     "Origin, Content-Type, Accept, Authorization",
+		AllowCredentials: true,
+	}))
+	log.Println("CORS middleware applied")
+
+	// Then logger
 	app.Use(logger.New())
+	// Then your custom middleware
+	app.Use(func(c *fiber.Ctx) error {
+		log.Printf("Request Origin: %s", c.Get("Origin"))
+		return c.Next()
+	})
+	log.Println("App configurations successful")
 }

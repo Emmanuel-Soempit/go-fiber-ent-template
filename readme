@@ -1,72 +1,169 @@
-# My Go App
+# XAIA Backend
 
-This is a simple web application built using the Fiber web framework in Go. The application demonstrates how to set up a basic server and handle HTTP requests.
+XAIA Backend is a Go-based backend service for the XAIA WhatsApp bot and user management system.  
+It leverages [Fiber](https://gofiber.io/) for HTTP routing, [Ent](https://entgo.io/) for ORM/database access, and integrates with the WhatsApp Cloud API for conversational commerce.
 
-## Project Structure
+---
+
+## Features
+
+- WhatsApp bot integration (greeting, product selection, FAQs, order flow)
+- Modular, clean architecture (handlers, usecases, repositories)
+- User registration and authentication (JWT)
+- MySQL database with Ent ORM
+- Environment-based configuration
+- Docker Compose support for local development
+- Easily extensible for new WhatsApp flows and commands
+
+---
+
+## Folder Structure
 
 ```
 xaia-backend/
 ├── cmd/
-│   └── main.go                     # Entry point
+│   └── main.go                  # Application entrypoint
+├── data/
+│   └── prompts.json             # Bot prompt tree (greetings, categories, etc.)
+├── ent/
+│   ├── client.go
+│   ├── customer.go
+│   ├── customer_create.go
+│   ├── customer_delete.go
+│   ├── customer_query.go
+│   ├── customer_update.go
+│   ├── ent.go
+│   ├── generate.go
+│   └── schema/
+│       └── user.go              # Ent schema for User entity
 ├── internal/
-│   └── api/
-│       ├── route.go               # Set up all routes
-│       └── auth/
-│           ├── authRoute.go      # Initialize login/register routes
-│           └── login/
-│               └── v1/
-│                   ├── handler.go    # loginHandler
-│           └── register/
-│               └── v1/
-│                   ├── handler.go    # registerHandler
+│   ├── api/
+│   │   ├── routes.go
+│   │   └── auth/
+│   │       ├── delivery/
+│   │       │   └── http/
+│   │       │       ├── dtos/
+│   │       │       └── routes.go
+│   │       ├── repository/
+│   │       │   ├── ent_user.go
+│   │       │   └── user_repo.go
+│   │       └── usecase/
+│   │           └── auth_impl.go
+|   |           └── auth.go
+│   ├── config/
+│   │   └── config.go            # App and DB initialization
+│   ├── middleware/
+│   │   ├── jwt.go
+│   ├── util/
+│   │   ├── jwt.go
+│   │   ├── password.go
+│   │   └── whatsapp.go
+│   └── whatsapp/
+│       ├── client/
+│       │   └── client_impl.go
+│       ├── delivery/
+│       │   └── http/
+│       │       ├── handler.go
+│       │       └── dtos/
+│       │           └── webhook.go
+│       ├── repository/
+│       ├── usecase/
+│       │   └── bot_impl.go
+├── .env                         # Environment variables
+├── .gitignore
+├── docker-compose.yml           # (if present)
 ├── go.mod
-├── .air.toml
-└── tmp/
-        # Project documentation
+├── go.sum
+└── LICENSE
 ```
+
+---
 
 ## Getting Started
 
 ### Prerequisites
 
-- Go 1.16 or later
-- Air for automatic compilation (optional)
+- [Go 1.20+](https://golang.org/dl/)
+- [MySQL](https://www.mysql.com/) (or Docker for local DB)
+- [Docker Compose](https://docs.docker.com/compose/) (optional, for DB)
 
-### Installation
+### Setup
 
-1. Clone the repository:
-
+1. **Clone the repository**
+   ```sh
+   git clone <repo-url>
+   cd xaia-backend
    ```
-   git clone https://github.com/microsoft/vscode-remote-try-go.git
-   cd my-go-app
+
+2. **Configure environment variables**
+
+   Edit `.env` as needed (see sample in repo):
+   ```
+   DATABASE_URL="root:root@tcp(localhost:3306)/xaia?parseTime=True"
+   JWT_SECRET="xaiatokensecretkey"
+   WHATSAPP_ACCESS_TOKEN="..."
+   WHATSAPP_PHONE_ID="..."
+   WHATSAPP_VERIFICATION_TOKEN="..."
    ```
 
-2. Install dependencies:
-
+3. **Start MySQL (optional, with Docker Compose)**
+   ```sh
+   docker-compose up -d
    ```
+
+4. **Install dependencies**
+   ```sh
    go mod tidy
    ```
 
-### Running the Application
+5. **Run the application**
+   ```sh
+   go run ./cmd/main.go
+   ```
+   Or, for live reload during development:
+   ```sh
+   air
+   ```
 
-To run the application, use the following command:
+---
 
-```
-go run cmd/main.go
-```
+## WhatsApp Bot Flow
 
-If you have Air installed, you can run:
+- **Greeting:** User receives a welcome message and is prompted to choose a category.
+- **Categories:** User selects from available tote categories (plain, pocketed, denim, etc.).
+- **Products:** Each category presents specific designs.
+- **FAQs:** User can request FAQs at any time.
+- **Order:** User provides order details, receives payment info, and gets confirmation.
 
-```
-air
-```
+Bot prompts and flows are defined in [`data/prompts.json`](data/prompts.json).
 
-This will start the application and automatically reload it when changes are made.
+---
 
-### Usage
+## API Endpoints
 
-Once the application is running, you can access it at `http://localhost:3000`. You can send requests to the defined routes and see how the application handles them.
+- `/api/v1/auth/register` — Register a new user
+- `/api/v1/auth/login` — Login and receive JWT
+- `/webhook` — WhatsApp webhook endpoint (for bot)
 
-## Contributing
+---
 
-Feel free to submit issues or pull requests if you have suggestions or improvements for the project.
+## Development Notes
+
+- **Business logic** is separated into usecases, repositories, and delivery layers for maintainability.
+- **WhatsApp integration** is handled in `internal/whatsapp/` (client, usecase, delivery).
+- **Bot prompt tree** is loaded from `data/prompts.json` for easy editing.
+- **User management** uses Ent ORM and is found in `internal/api/auth/`.
+
+---
+
+## License
+
+This project is licensed under the [MIT License](LICENSE).
+
+---
+
+## Acknowledgements
+
+- [Fiber](https://gofiber.io/)
+- [Ent ORM](https://entgo.io/)
+- [WhatsApp Cloud API](https://developers.facebook.com/docs/whatsapp/)

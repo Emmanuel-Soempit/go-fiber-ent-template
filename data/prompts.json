@@ -1,0 +1,211 @@
+{
+  "type": "text",
+  "prompts": ["Hello 👋", "Hello", "Hi", "Hey", "Start", "Start XAIA", "Start XAIA Totes"],
+  "message": "Hi there! 👋 Welcome to XAIA — we provide high quality, functional, and pocket-friendly totes.\n\nYou can get started by choosing an option below or typing its shortcut:\n\n• 👜 Categories — /categories\n• ❓ FAQs — /faqs\n• 🛒 Order — /order\n• 💳 Payment — /payment\n• ✅ Confirm — /confirm\n\nReady to find the perfect tote for you?",
+  "handler": "welcomeHandler",
+  "children": {
+    "categories": {
+      "type": "list",
+      "prompts": ["/categories", "categories"],
+      "items": {
+        "type": "list",
+        "header": {
+          "type": "text",
+          "text": "XAIA Totes"
+        },
+        "body": {
+          "text": "Choose a tote category to explore:"
+        },
+        "footer": {
+          "text": "Powered by XAIA"
+        },
+        "action": {
+          "button": "View Categories",
+          "sections": [
+            {
+              "title": "Tote Categories",
+              "rows": [
+                { "id": "plain_tote", "title": "Plain Tote", "description": "Customizable plain tote" },
+                { "id": "pocketed_tote", "title": "Pocketed Tote", "description": "Pocketed tote with key holder & zipper" },
+                { "id": "drawstring_tote", "title": "Drawstring Tote", "description": "Classic drawstring‑style tote" },
+                { "id": "denim_tote", "title": "Denim Tote", "description": "Signature denim finish" },
+                { "id": "velvet_tote", "title": "Velvet Tote", "description": "Plush velvet statement tote" },
+                { "id": "aso_oke_tote", "title": "Aso‑Oke Tote", "description": "Heritage Aso‑Oke hand‑woven tote" }
+              ]
+            }
+          ]
+        }
+      },
+      "handler": "",
+      "children": {
+        "plain_tote": {
+          "type": "list",
+          "prompts": ["plain_tote", "Plain Tote"],
+          "items": {
+            "type": "list",
+            "header": { "type": "text", "text": "Plain Tote Designs" },
+            "body": { "text": "Select a design to see pictures and prices:" },
+            "footer": { "text": "All totes are customizable!" },
+            "action": {
+              "button": "View Designs",
+              "sections": [
+                {
+                  "title": "Plain Tote Designs",
+                  "rows": [
+                    { "id": "plain_naomi", "title": "Naomi", "description": "A plain tote perfect for custom prints." }
+                  ]
+                }
+              ]
+            }
+          },
+          "handler": "",
+          "queries": ["plain_naomi"]
+        },
+        "pocketed_tote": {
+          "type": "list",
+          "prompts": ["pocketed_tote", "Pocketed Tote"],
+          "items": {
+            "type": "list",
+            "header": { "type": "text", "text": "Pocketed Tote Designs" },
+            "body": { "text": "Select a design to see pictures and prices:" },
+            "footer": { "text": "All totes are customizable!" },
+            "action": {
+              "button": "View Designs",
+              "sections": [
+                {
+                  "title": "Pocketed Tote Designs",
+                  "rows": [
+                    { "id": "pocketed_eden", "title": "Eden", "description": "A pocketed tote with an external key holder." },
+                    { "id": "pocketed_snug", "title": "Snug Tote", "description": "Pocketed and comes with an attached teddy bear." },
+                    { "id": "pocketed_luxe", "title": "Luxe Voyager", "description": "Spacious, with zipped inner and outer pockets." },
+                    { "id": "pocketed_jubilee", "title": "Jubilee", "description": "A chic, work-to-weekend pocketed tote." },
+                    { "id": "pocketed_salem", "title": "Salem", "description": "Outer pocket designed to hold your water bottle or cup." },
+                    { "id": "pocketed_beulah", "title": "Beulah", "description": "Large cargo-style external pockets." }
+                  ]
+                }
+              ]
+            }
+          },
+          "handler": "",
+          "queries": ["pocketed_snug", "pocketed_luxe", "pocketed_jubilee", "pocketed_salem", "pocketed_beulah"]
+        },
+        "drawstring_tote": {
+          "type": "list",
+          "prompts": ["drawstring_tote", "Drawstring Tote"],
+          "items": {
+            "type": "list",
+            "header": { "type": "text", "text": "Drawstring Tote Designs" },
+            "body": { "text": "Select a design to see pictures and prices:" },
+            "footer": { "text": "All totes are customizable!" },
+            "action": {
+              "button": "View Designs",
+              "sections": [
+                {
+                  "title": "Drawstring Tote Designs",
+                  "rows": [
+                    { "id": "drawstring_havilah", "title": "Havilah", "description": "A drawstring-style tote." }
+                  ]
+                }
+              ]
+            }
+          },
+          "handler": "",
+          "queries": ["drawstring_havilah"]
+        },
+        "denim_tote": {
+          "type": "list",
+          "prompts": ["denim_tote", "Denim Tote"],
+          "items": {
+            "type": "list",
+            "header": { "type": "text", "text": "Denim Tote Designs" },
+            "body": { "text": "Select a design to see pictures and prices:" },
+            "footer": { "text": "All totes are customizable!" },
+            "action": {
+              "button": "View Designs",
+              "sections": [
+                {
+                  "title": "Denim Tote Designs",
+                  "rows": [
+                    { "id": "denim_bethel", "title": "Bethel", "description": "Our signature denim tote." }
+                  ]
+                }
+              ]
+            }
+          },
+          "handler": "",
+          "queries": ["denim_bethel"]
+        },
+        "velvet_tote": {
+          "type": "list",
+          "prompts": ["velvet_tote", "Velvet Tote"],
+          "items": {
+            "type": "list",
+            "header": { "type": "text", "text": "Velvet Tote Designs" },
+            "body": { "text": "Select a design to see pictures and prices:" },
+            "footer": { "text": "All totes are customizable!" },
+            "action": {
+              "button": "View Designs",
+              "sections": [
+                {
+                  "title": "Velvet Tote Designs",
+                  "rows": [
+                    { "id": "velvet_myrrh", "title": "Myrrh", "description": "Velvet finish, plush and statement-making." }
+                  ]
+                }
+              ]
+            }
+          },
+          "handler": "",
+          "queries": ["velvet_myrrh"]
+        },
+        "aso_oke_tote": {
+          "type": "list",
+          "prompts": ["aso_oke_tote", "Aso-Oke Tote"],
+          "items": {
+            "type": "list",
+            "header": { "type": "text", "text": "Aso-Oke Tote Designs" },
+            "body": { "text": "Select a design to see pictures and prices:" },
+            "footer": { "text": "All totes are customizable!" },
+            "action": {
+              "button": "View Designs",
+              "sections": [
+                {
+                  "title": "Aso-Oke Tote Designs",
+                  "rows": [
+                    { "id": "asooke_ayanfe", "title": "Tote Ayanfe", "description": "Our classic Aso-Oke tote, rich in heritage and craftsmanship." }
+                  ]
+                }
+              ]
+            }
+          },
+            "handler": "",
+          "queries": ["asooke_ayanfe"]
+        }
+      }
+    },
+    "faqs": {
+      "type": "text",
+      "prompts": ["/faqs", "faqs"],
+      "message": "• What’s your location? First gate/ Lamingo Jos\n• What colors are available? All colors are available\n• Can it be customized? Yes it can be\n• How soon can I get it? Order takes 5-7 working days\n• What size is it? Size can be customized S/M/L (we offer Medium Size normally)\n• Can I get a discount for bulk purchase? Yes you can, we have wholesale packages available from a dozen upwards",
+      "handler": ""
+    },
+    "order": {
+      "type": "text",
+      "prompts": ["/order", "order"],
+      "message": "Ready to buy? Please provide the following details:\n- Tote design\n- Color\n- Quantity\n- Size (S/M/L or custom)\n- Any other specifications\n\nOnce submitted, we’ll send you payment information.",
+      "handler": ""
+    },
+    "payment": {
+      "type": "text",
+      "prompts": ["/payment", "payment"],
+      "message": "Please transfer payment to the account details provided. After payment, send us your receipt.",
+      "handler": ""
+    },
+    "confirm": {
+      "type": "text",
+      "prompts": ["/confirm", "confirm"],
+      "message": "Thank you for your order! We will notify you once your tote is ready for pickup or delivery.",
+      "handler": ""
+    }
+  }
+}
