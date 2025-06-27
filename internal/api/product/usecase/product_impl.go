@@ -3,6 +3,7 @@ package usecase
 import (
 	"context"
 	"errors"
+	"fmt"
 	"log"
 	"os"
 	"strings"
@@ -51,7 +52,12 @@ func (u *productUsecase) UpdateProduct(ctx context.Context, id int, req dtos.Upd
 			return nil, err
 		}
 
-		imagePath := strings.TrimPrefix(product.ImageURL, "/")
+		var imagePath string
+		if os.Getenv("Environment") == "local" {
+			imagePath = strings.TrimPrefix(product.ImageURL, "/")
+		} else {
+			imagePath = fmt.Sprintf("..%s", product.ImageURL)
+		}
 
 		err = os.Remove(imagePath)
 		if err != nil {
